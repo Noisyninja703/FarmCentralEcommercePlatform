@@ -1,0 +1,53 @@
+﻿@model IEnumerable< ST10084225_FarmCentral_MVC.Models.Product>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<div class="box">
+    @foreach (var item in Model)
+    {
+        @*Custom Product Cards
+    ~ Can be used for any role to view the product database
+    ~ The controller will dictate what products are displayed for which roles.
+    ~ If a farmer views this page, they will only see their products
+    *@
+        <div>
+            <div class="card mb-0">
+
+                <div class="justify-content-center">
+                    <image src="@("/Images/UserImages/" + item.ImageID)" class="d-block user-select-none coverImage card-img-top" width="10px" height="10px" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle" />
+                </div>
+                <div class="card-header">
+                    <div class="NameWrapper">
+                        <div class="inner-name-wrapper">
+                            <h5 style="text-align:center">@(item.Name)</h5>
+                            <h6 style="text-align:center">R@(item.Price)</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <div class="boxStart" style="justify-content:center">
+                        <div class="btn btn-outline-info text-white">
+                            @((item.Date).ToShortDateString())
+                        </div>
+
+                        <div>
+                            <a class="btn btn-outline-success" asp-controller="Products" asp-action="Details" asp-route-id="@(item.ProductID)">Details</a>
+                        </div>
+
+                        <div>
+                            @if (SignInManager.IsSignedIn(User) & User.IsInRole("Manager"))
+                            {
+                                <a class="btn btn-outline-danger" asp-controller="Products" asp-action="Delete" asp-route-id="@(item.ProductID)">Delete</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <a asp-action="Index" asp-controller="Farmers">Back To Search</a>
+    </div>  
+</div>
+

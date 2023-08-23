@@ -1,0 +1,33 @@
+﻿@model IEnumerable<ST10084225_FarmCentral_MVC.Models.Farmer>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div class="box">
+            <div>
+                <h1>Manage Farmers</h1>
+            </div>
+        </div>
+     </div>
+</div>
+
+<div class="box">
+    @foreach (var item in Model)
+    {
+        @*Custom Farmer Cards*@
+    
+  <div class="card border-primary mb-3" style="max-width: 20rem;">
+  <div class="card-header">Farmer</div>
+  <div class="card-body">
+    <h4 class="card-title">@item.FarmerName</h4>
+    <p class="card-text">Farmer ID: @item.FarmerID</p>
+    <a class="btn btn-info" asp-controller="Farmers" asp-action="FarmerSearch" asp-route-id="@item.FarmerID">View Products</a>
+  </div>
+</div>
+    }
+</div>
+
+

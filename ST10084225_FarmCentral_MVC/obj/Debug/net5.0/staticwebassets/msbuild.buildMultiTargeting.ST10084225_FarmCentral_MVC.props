@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\ST10084225_FarmCentral_MVC.props" />
+</Project>

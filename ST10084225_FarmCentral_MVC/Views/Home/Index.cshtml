@@ -1,0 +1,87 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@if (SignInManager.IsSignedIn(User) & (User.IsInRole("Employee") || User.IsInRole("Manager")))
+{
+     <div class="text-center">
+        <h1 class="display-4">Welcome @User.Identity.Name</h1>
+    </div>
+    <div class="box">
+     <div class="card border-info" style="max-width: 20rem;">
+            <div class="card-header">View Available Products</div>
+            <div class="card-body">
+                <h4 class="card-title">All Available Products</h4>
+                <a class="btn btn-outline-info float-end" asp-controller="Products" asp-action="Index">Goto</a>
+            </div>
+        </div>
+        <div class="card border-warning" style="max-width: 20rem;">
+            <div class="card-header">View Farmer's Products</div>
+            <div class="card-body">
+                <h6 class="card-title">View All Farmer's and their products</h6>
+                <a class="btn btn-outline-warning float-end" asp-controller="Farmers" asp-action="Index">Goto</a>
+            </div>
+        </div>
+    </div>
+}
+
+@if (SignInManager.IsSignedIn(User) & User.IsInRole("Farmer"))
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome @User.Identity.Name</h1>
+    </div>
+    <div class="box">
+        <div class="card border-info" style="max-width: 20rem;">
+            <div class="card-header">View Your Available Products</div>
+            <div class="card-body">
+                <h4 class="card-title">All Your Available Products</h4>
+                <a class="btn btn-outline-info float-end" asp-controller="Products" asp-action="Index">Goto</a>
+            </div>
+        </div>
+        <div class="card border-warning" style="max-width: 20rem;">
+            <div class="card-header">View Farmer's Products</div>
+            <div class="card-body">
+                <h5 class="card-title">Add a New Product</h5>
+                <a class="btn btn-outline-warning float-end" asp-controller="Products" asp-action="Create">Goto</a>
+            </div>
+        </div>
+    </div>
+}
+
+@if (SignInManager.IsSignedIn(User) & User.IsInRole("Customer"))
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome @User.Identity.Name</h1>
+    </div>
+    <div class="box">
+        <div class="card border-info" style="max-width: 20rem;">
+            <div class="card-header">View Available Products</div>
+            <div class="card-body">
+                <h4 class="card-title">All Available Products</h4>
+                <a class="btn btn-outline-info float-end" asp-controller="Products" asp-action="Index">Goto</a>
+            </div>
+        </div>
+        <div class="card border-warning" style="max-width: 20rem;">
+            <div class="card-header">Online Store</div>
+            <div class="card-body">
+                <h4 class="card-title">Coming Soon...</h4>
+                <a class="btn btn-outline-warning float-end">Pray</a>
+            </div>
+        </div>
+    </div>
+}
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome To Farmer Central</h1>
+        <h6 class="display-4">Your one stop shop for local farm products.</h6>
+        <h9 class="display-4 text-muted">Please login to continue </h9>
+    </div>
+}
